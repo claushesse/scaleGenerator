@@ -5,7 +5,7 @@
  
     a) The constuctor will take a name and number.
     Example:
-       const middleC = new Note ('C', 4)
+       ```const middleC = new Note ('C', 4)```
     Note that the name can be these values C,C#,D,D#,E,F,F#,G,G#,A,A#,B
     and numbers can be from 0 to 10.
     
