@@ -1,0 +1,42 @@
+*{
+    font-family: monospace;
+}
+
+#app{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#selects{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 35%;
+    min-height: 50px;
+    margin-bottom: 20px;
+    padding: 20px 10px;
+    border: 1px solid gray;
+}
+
+.select{
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    justify-content: start;
+    margin: 0 10px;
+}
+
+.select select{
+    margin: 10px 0 0;
+}
+
+#scale{
+    display: flex;
+    justify-content: space-between;
+    min-width: 35%;
+    margin-top: 20px;
+}

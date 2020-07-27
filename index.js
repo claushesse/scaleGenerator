@@ -1,3 +1,33 @@
+const generate = document.getElementById("generate"),
+      mode = document.getElementById("mode"),
+      basenote = document.getElementById("baseNote"),
+      octave = document.getElementById("octave"),
+      scaleContainer = document.getElementById("scale"),
+      modes = {
+        ionian: [2,2,1,2,2,2,1],
+        dorian: [2,1,2,2,2,1,2],
+        phrygian: [1,2,2,2,1,2,2],
+        lydian: [2,2,2,1,2,2,1],
+        mixolydian: [2,2,1,2,2,1,2],
+        aeolian: [2,1,2,2,1,2,2],
+        locrian: [1,2,2,1,2,2,2]
+      };
+
+const generateScale = () => {
+    const codeSelected = modes[mode.value];
+    const modeSelected = mode.value;
+    const note = new Note(basenote.value, octave.value);
+    const scale = new Scale(modeSelected, codeSelected, note)
+    console.log("addeventlistener", modes[mode.value])
+    for(let note of scale){
+        let noteDiv = document.createElement("div"); 
+        let noteName = document.createTextNode(note); 
+        noteDiv.appendChild(noteName);
+        scaleContainer.appendChild(noteDiv);
+    }
+}
+
+generate.addEventListener("click", generateScale)
 class Note {
     constructor(name, number) {
         this.name = name.toUpperCase();
@@ -87,21 +117,21 @@ class Scale {
     }
 };
 
-const middleC = new Note('C', 4);
-const middleD = new Note('D', 4);
-const middleA = new Note('A', 4);
-const cMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleC)
-const dMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleD)
-const aMinorScale = new Scale('Minor', [2,1,2,2,1,2,2], middleA)
+// const middleC = new Note('C', 4);
+// const middleD = new Note('D', 4);
+// const middleA = new Note('A', 4);
+// const cMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleC)
+// const dMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleD)
+// const aMinorScale = new Scale('Minor', [2,1,2,2,1,2,2], middleA)
 
-for(let note of cMajorScale){
-    console.log('iterator', note)
-}
+// for(let note of cMajorScale){
+//     console.log('iterator', note)
+// }
 
-console.log('getFreq C', middleC.getFrequency());
-console.log('getFreq A', middleA.getFrequency());
-console.log('name C', middleC.name);
-console.log('fullname C', middleC.fullName);
-console.log('getNotes cMajor', cMajorScale.getNotes());
-console.log('getNotes aMinor', aMinorScale.getNotes());
-console.log('isRelative', cMajorScale.isRelativeTo(aMinorScale));
+// console.log('getFreq C', middleC.getFrequency());
+// console.log('getFreq A', middleA.getFrequency());
+// console.log('name C', middleC.name);
+// console.log('fullname C', middleC.fullName);
+// console.log('getNotes cMajor', cMajorScale.getNotes());
+// console.log('getNotes aMinor', aMinorScale.getNotes());
+// console.log('isRelative', cMajorScale.isRelativeTo(aMinorScale));
