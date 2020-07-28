@@ -37,7 +37,22 @@
 #scale{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     min-width: 35%;
+    min-height: 2.5em;
     margin-top: 50px;
     font-weight: bold;
+}
+
+.note{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    min-height: 30px;
+    cursor: crosshair;
+}
+
+.playing{
+    font-size: 2em;
 }

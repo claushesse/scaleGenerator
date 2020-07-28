@@ -3,6 +3,8 @@ const generate = document.getElementById("generate"),
       basenote = document.getElementById("baseNote"),
       octave = document.getElementById("octave"),
       scaleContainer = document.getElementById("scale"),
+      audioContext = new (window.AudioContext || window.webkitAudioContext)(),
+      osc = audioContext.createOscillator(),
       modes = {
         ionian: [2,2,1,2,2,2,1],
         dorian: [2,1,2,2,2,1,2],
@@ -13,6 +15,30 @@ const generate = document.getElementById("generate"),
         locrian: [1,2,2,1,2,2,2]
       };
 
+osc.type = 'sine';
+osc.start();
+
+document.querySelector('button').addEventListener('click', function() {
+    audioContext.resume().then(() => {
+      console.log('Playback resumed successfully');
+    });
+});
+
+const play = (e) => {
+    e.target.classList.toggle("playing")
+    console.log(e.target)
+    osc.frequency.setValueAtTime(e.target.getAttribute('data-freq'), audioContext.currentTime);
+    osc.connect(audioContext.destination);
+    // osc.frequency.setValueAtTime(440, audioContext.currentTime); 
+    // osc.start();
+}
+
+const blur = (e) => {
+    e.target.classList.toggle("playing")
+    osc.disconnect(audioContext.destination);
+    // osc.stop();
+}
+
 const generateScale = () => {
     const codeSelected = modes[mode.value];
     const modeSelected = mode.value;
@@ -20,7 +46,14 @@ const generateScale = () => {
     const scale = new Scale(modeSelected, codeSelected, note)
     scaleContainer.innerHTML = "";
     for(let note of scale){
-        let noteDiv = document.createElement("div"); 
+        let noteDiv = document.createElement("div");
+        let currentNote
+        scale.getNotes().forEach((n)=>{if (n.name === note) {currentNote = n.getFrequency()} })
+        // console.log(currentNote)
+        noteDiv.classList.add("note")
+        noteDiv.setAttribute('data-freq', currentNote);
+        noteDiv.addEventListener("mouseover", play);
+        noteDiv.addEventListener("mouseout", blur)
         let noteName = document.createTextNode(note); 
         noteDiv.appendChild(noteName);
         scaleContainer.appendChild(noteDiv);
@@ -57,6 +90,7 @@ class Note {
 
     getFrequency() { 
         const baseNote = Note.frequencies().get(this.name);
+        // console.log('getFrequency FUNC', this.number)
         return (baseNote * Math.pow(2, this.number))
     }
 };
@@ -96,7 +130,7 @@ class Scale {
                 octaveChange = true
             }
             if(idx < 6){
-                notes.push(new Note(Scale.notes()[index], octaveChange ? this.baseNote.number + 1 : this.baseNote.number))
+                notes.push(new Note(Scale.notes()[index], octaveChange ? Number(this.baseNote.number) + 1 : Number(this.baseNote.number)))
             }
         })
         return notes
@@ -120,13 +154,19 @@ class Scale {
 // const middleC = new Note('C', 4);
 // const middleD = new Note('D', 4);
 // const middleA = new Note('A', 4);
+// const upperC = new Note('C', 5);
 // const cMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleC)
+// const cMajorScaleUpper = new Scale('Major', [2,2,1,2,2,2,1], upperC)
 // const dMajorScale = new Scale('Major', [2,2,1,2,2,2,1], middleD)
 // const aMinorScale = new Scale('Minor', [2,1,2,2,1,2,2], middleA)
 
 // for(let note of cMajorScale){
 //     console.log('iterator', note)
 // }
+
+// cMajorScaleUpper.getNotes().forEach((e)=>{
+//     console.log('cmajorscaleupper', e.getFrequency())
+// })
 
 // console.log('getFreq C', middleC.getFrequency());
 // console.log('getFreq A', middleA.getFrequency());
