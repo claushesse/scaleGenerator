@@ -18,7 +18,7 @@ const generateScale = () => {
     const modeSelected = mode.value;
     const note = new Note(basenote.value, octave.value);
     const scale = new Scale(modeSelected, codeSelected, note)
-    console.log("addeventlistener", modes[mode.value])
+    scaleContainer.innerHTML = "";
     for(let note of scale){
         let noteDiv = document.createElement("div"); 
         let noteName = document.createTextNode(note); 

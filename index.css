@@ -38,5 +38,6 @@
     display: flex;
     justify-content: space-between;
     min-width: 35%;
-    margin-top: 20px;
+    margin-top: 50px;
+    font-weight: bold;
 }
