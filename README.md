@@ -1,1 +1,1 @@
-[claushesse.me/scaleGenerator](https://www.claushesse.me/scaleGenerator)
+[claushesse.github.io/scaleGenerator](https://claushesse.github.io/scaleGenerator)
